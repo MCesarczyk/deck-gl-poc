@@ -2,15 +2,13 @@
 import * as L from 'leaflet';
 import {LeafletLayer} from 'deck.gl-leaflet';
 import {MapView} from '@deck.gl/core';
-import {GeoJsonLayer, ArcLayer} from '@deck.gl/layers';
+import {GeoJsonLayer} from '@deck.gl/layers';
 
-// source: Natural Earth http://www.naturalearthdata.com/ via geojson.xyz
-const AIR_PORTS =
-  'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson';
+const LINEAMENTS = 'https://researchmlstorage.blob.core.windows.net/frontend-mocks/test/test44raw.geojson';
 
 const map = L.map(document.getElementById('map'), {
-  center: [51.47, 0.45],
-  zoom: 4
+  center: [51.40, -55.79],
+  zoom: 12
 });
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution:
@@ -26,31 +24,24 @@ const deckLayer = new LeafletLayer({
   ],
   layers: [
     new GeoJsonLayer({
-      id: 'airports',
-      data: AIR_PORTS,
-      // Styles
+      id: 'lineaments',
+      data: LINEAMENTS,
+      extruded: true,
       filled: true,
+      getElevation: 30,
       pointRadiusMinPixels: 2,
+      getLineWidth: 20,
+      getPointRadius: 4,
       pointRadiusScale: 2000,
-      getPointRadius: f => 11 - f.properties.scalerank,
-      getFillColor: [200, 0, 80, 180]
+      getFillColor: [160, 160, 180, 200],
+      pointRadiusUnits: 'pixels',
+      pointType: 'circle+text',
+      stroked: false,
+      pickable: true,
     }),
-    new ArcLayer({
-      id: 'arcs',
-      data: AIR_PORTS,
-      // @ts-expect-error
-      dataTransform: (d) => d.features.filter(f => f.properties.scalerank < 4),
-      // Styles
-      getSourcePosition: f => [-0.4531566, 51.4709959], // London
-      getTargetPosition: f => f.geometry.coordinates,
-      getSourceColor: [0, 128, 200],
-      getTargetColor: [200, 0, 80],
-      getWidth: 1
-    })
   ]
 });
 map.addLayer(deckLayer);
 
 const featureGroup = L.featureGroup();
-featureGroup.addLayer(L.marker([51.4709959, -0.4531566]));
 map.addLayer(featureGroup);
