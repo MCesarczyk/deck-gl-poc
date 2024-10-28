@@ -42,6 +42,3 @@ const deckLayer = new LeafletLayer({
   ]
 });
 map.addLayer(deckLayer);
-
-const featureGroup = L.featureGroup();
-map.addLayer(featureGroup);
