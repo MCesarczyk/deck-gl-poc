@@ -18,6 +18,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 const deckLayer = new LeafletLayer({
+  // @ts-expect-error
   views: [
     new MapView({
       repeat: true
@@ -37,7 +38,8 @@ const deckLayer = new LeafletLayer({
     new ArcLayer({
       id: 'arcs',
       data: AIR_PORTS,
-      dataTransform: d => d.features.filter(f => f.properties.scalerank < 4),
+      // @ts-expect-error
+      dataTransform: (d) => d.features.filter(f => f.properties.scalerank < 4),
       // Styles
       getSourcePosition: f => [-0.4531566, 51.4709959], // London
       getTargetPosition: f => f.geometry.coordinates,
