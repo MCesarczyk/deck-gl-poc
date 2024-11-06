@@ -4,11 +4,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 100;
 }
 
-.leaflet-layer,
-.leaflet-control-zoom-in,
+/* .leaflet-control-zoom-in,
 .leaflet-control-zoom-out,
-.leaflet-control-attribution {
+.leaflet-control-attribution, */
+/* .leaflet-layer {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-}
+} */

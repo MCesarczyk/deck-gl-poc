@@ -1,3 +1,4 @@
+// import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 import { LeafletLayer } from "deck.gl-leaflet";
 import { MapView } from "@deck.gl/core";
@@ -28,6 +29,7 @@ export const Lineaments = () => {
         getPointRadius: 4,
         pointRadiusScale: 2000,
         getFillColor: [160, 160, 180, 200],
+        getLineColor: [255, 255, 255],
         pointRadiusUnits: "pixels",
         pointType: "circle+text",
         stroked: false,
